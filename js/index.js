@@ -52,12 +52,14 @@ document.write("<p>Bài 2: <br>" + price.getCurrency("d") + "</p>");
 
 // Bài 3
 document.write("<p>Bài 3: Console</p>");
-Array.prototype.push2 = function (value) {
-  this[this.length] = value;
+Array.prototype.push2 = function () {
+  for (const item of arguments) {
+    this[this.length] = item;
+  }
 };
 
 var arr = [1, 2];
-arr.push2(3);
+arr.push2(3, 5, 6);
 console.log("Bài 3:", arr);
 
 // Bài 4
@@ -117,6 +119,12 @@ var categories = [
           {
             id: 12,
             name: "Chuyên mục 2.2.3",
+            children: [
+              {
+                id: 13,
+                name: "Chuyên mục 2.2.3.1",
+              },
+            ],
           },
         ],
       },
@@ -150,10 +158,8 @@ function makeOptions(categories, level = 0) {
   var option = categories
     .map(function (item) {
       var prev = "";
-      if (level === 1) {
-        prev = "--|";
-      } else if (level === 2) {
-        prev = "--|--|";
+      for (var i = 0; i < level; i++) {
+        prev += "--|";
       }
       if (item.children) {
         var children = makeOptions(item.children, level + 1);
